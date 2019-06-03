@@ -1,0 +1,245 @@
+<section class="section">
+    <repeat group="{{@basic_info}}" value="{{@info}}">
+        <input type="hidden" name="" id="order-id" data-id="{{@info.id}}">
+        <table class="table is-fullwidth">
+            <tbody>
+                <tr>
+                    <td>Requester: </td>
+                    <td>{{@info.name}}</td>
+                </tr>
+                <tr>
+                    <td>Date requested: </td>
+                    <td>{{@info.date}}</td>
+                </tr>
+                <tr>
+                    <td>Date needed: </td>
+                    <td>{{@info.date_needed}}</td>
+                </tr>
+                <tr>
+                    <td>Purchase Received: </td>
+                    <td>
+                        <check if="{{@info.purchase_received == ''}}">
+                            <true>---</true>
+                            <false>{{@info.purchase_received}}</false>
+                        </check>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Purchase Order: </td>
+                    <td>
+                        <check if="{{@info.purchase_order == ''}}">
+                            <true>---</true>
+                            <false>{{@info.purchase_order}}</false>
+                        </check>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    <td>
+                        <check if="{{@info.status == 'Pending'}}">
+                            <true><span class='has-text-danger'>{{@info.status}}</span></true>
+                            <false><span class='has-text-success'>{{@info.status}}</span></false>
+                        </check>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <span class="fas fa-check"></span> -->
+        <div class="columns">
+            <div class="column">
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <repeat group="{{@types_selected}}" value="{{@type}}">
+                                    <check if="{{@type.type_name=='regular'}}">
+                                        <true>
+                                            <label for="regular" class="checkbox">
+                                                <check if="{{@type.value==1}}">
+                                                    <true><input type="checkbox" name="regular" id="regular" disabled
+                                                            checked>
+                                                    </true>
+                                                    <false><input type="checkbox" name="regular" id="regular" disabled>
+                                                    </false>
+                                                </check>
+                                                <b>Regular</b>
+                                            </label>
+                                        </true>
+                                    </check>
+                                    <check if="{{@type.type_name=='emergency'}}">
+                                        <true>
+                                            <label for="emergency" class="checkbox">
+                                                <check if="{{@type.value==1}}">
+                                                    <true><input type="checkbox" name="emergency" id="emergency"
+                                                            disabled checked></true>
+                                                    <false><input type="checkbox" name="emergency" id="emergency"
+                                                            disabled>
+                                                    </false>
+                                                </check>
+                                                <b>Emergency</b>
+                                            </label>
+                                        </true>
+                                    </check>
+                                    <check if="{{@type.type_name=='budgeted'}}">
+                                        <true>
+                                            <label for="budgeted" class="checkbox">
+                                                <check if="{{@type.value==1}}">
+                                                    <true><input type="checkbox" name="budgeted" id="budgeted" checked
+                                                            disabled>
+                                                    </true>
+                                                    <false><input type="checkbox" name="budgeted" id="budgeted"
+                                                            disabled></false>
+                                                </check>
+                                                <b>Budgeted</b>
+                                            </label>
+                                        </true>
+                                    </check>
+                                    <check if="{{@type.type_name=='unbudgeted'}}">
+                                        <true>
+                                            <label for="unbudgeted" class="checkbox">
+                                                <check if="{{@type.value==1}}">
+                                                    <true><input type="checkbox" name="unbudgeted" id="unbudgeted"
+                                                            checked disabled></true>
+                                                    <false><input type="checkbox" name="unbudgeted" id="unbudgeted"
+                                                            disabled>
+                                                    </false>
+                                                </check>
+                                                <b>Unbudgeted</b>
+                                            </label>
+                                        </true>
+                                    </check>
+                                </repeat>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field is-grouped is-grouped-multiline">
+                    <repeat group="{{@categories_selected}}" value="{{@category}}" counter="{{@count}}">
+                        <check if="{{@category.category_name=='Travel'}}">
+                            <div class="control">
+                                <label for="Travel" class="checkbox"><input type="checkbox" name="Travel" id="Travel"
+                                        {{@category.value==1?'checked':''}} disabled>
+                                    Travel</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Supplies/Materials'}}">
+                            <div class="control">
+                                <label for="Supplies/Materials" class="checkbox"><input type="checkbox"
+                                        name="Supplies/Materials" id="Supplies/Materials"
+                                        {{@category.value==1?'checked':''}} disabled> Supplies/Materials</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Software_Licenses'}}">
+                            <div class="control">
+                                <label for="Software_Licenses" class="checkbox"><input type="checkbox"
+                                        name="Software_Licenses" id="Software_Licenses"
+                                        {{@category.value==1?'checked':''}} disabled> Software
+                                    Licenses</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Preventive_Maintenance'}}">
+                            <div class="control">
+                                <label for="Preventive_Maintenance" class="checkbox"><input type="checkbox"
+                                        name="Preventive_Maintenance" id="Preventive_Maintenance"
+                                        {{@category.value==1?'checked':''}} disabled> Preventive
+                                    Maintenance</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Insurance'}}">
+                            <div class="control">
+                                <label for="Insurance" class="checkbox"><input type="checkbox" name="Insurance"
+                                        id="Insurance" {{@category.value==1?'checked':''}} disabled>
+                                    Insurance</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Repair'}}">
+                            <div class="control">
+                                <label for="Repair" class="checkbox"><input type="checkbox" name="Repair" id="Repair"
+                                        {{@category.value==1?'checked':''}} disabled>
+                                    Repair</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Uniform/PPE'}}">
+                            <div class="control">
+                                <label for="Uniform/PPE" class="checkbox"><input type="checkbox" name="Uniform/PPE"
+                                        id="Uniform/PPE" {{@category.value==1?'checked':''}} disabled>
+                                    Uniform/PPE</label>
+                            </div>
+                        </check>
+                        <check if="{{@category.category_name=='Furn/Eqpt/Fixt'}}">
+                            <div class="control">
+                                <label for="Furn/Eqpt/Fixt" class="checkbox"><input type="checkbox"
+                                        name="Furn/Eqpt/Fixt" id="Furn/Eqpt/Fixt" {{@category.value==1?'checked':''}}
+                                        disabled>
+                                    Furn/Eqpt/Fixt</label>
+                            </div>
+                        </check>
+                        <check if="{{@count==9}}">
+                            <div class="control">
+                                <label for="Others" class="checkbox"><input type="checkbox" name="Others" id="Others"
+                                        {{@category.value==1?'checked':''}} disabled>
+                                    Others /
+                                    Please specify: <input type="text" name="others_custom"
+                                        value="{{@category.category_name!='Others'?@category.category_name:''}}"
+                                        disabled></label>
+                            </div>
+                        </check>
+                    </repeat>
+                </div>
+            </div>
+        </div>
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Quantity with OUM</th>
+                    <th>Description</th>
+                    <th>Remarks / Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <repeat group="{{@requests}}" value="{{@request}}">
+                    <tr>
+                        <td>{{@request.quantity_with_oum}}</td>
+                        <td>{{@request.description}}</td>
+                        <td>{{@request.remarks_or_purpose}}</td>
+                    </tr>
+                </repeat>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="button is-info edit-order"><span class="icon"><i
+                        class="fas fa-pen"></i></span><span>Edit</span></button>
+            <button class="button add-pr"><span class="icon"><i class="fas fa-plus"></i></span><span>Add / Edit
+                    PR</span></button>
+            <button class="button add-or"><span class="icon"><i class="fas fa-plus"></i></span><span>Add / Edit
+                    OR</span></button>
+            <button class="button add-file"><span class="icon"><i class="fas fa-file"></i></span><span>Upload File</span></button>
+            <check if="{{@user_login}}">
+                <true>
+                    <check if="{{@info.file_upload != ''}}">
+                        <true>
+                            <a target="_blank" href="{{@BASE . '/' . @info.file_upload}}" class="button"><span class="icon"><i class="fas fa-file"></i></span><span>Uploaded File</span></a>
+                        </true>
+                    </check>
+                    <a target="_blank" href="{{@BASE . '/order/' . @info.id . '/pdf'}}" class="button print-pdf"><span class="icon"><i
+                                class="fas fa-file-pdf"></i></span><span>Print to
+                            PDF</span></a>
+                </true>
+            </check>
+            <button class="button is-danger close-view-modal"><span class="icon"><i
+                        class="fas fa-window-close"></i></span><span>Cancel</span></button>
+        </div>
+    </repeat>
+</section>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $('.close-view-modal').on('click', function () {
+            $('#view_order_modal').iziModal('close');
+        });
+    });
+</script>

@@ -1,0 +1,82 @@
+<table class="table is-fullwidth is-striped" id="orders_table">
+    <thead>
+        <tr>
+            <th>Name Requested</th>
+            <th>Date</th>
+            <th></th>
+            <th>Purchase Received</th>
+            <th>Purchase Order</th>            
+            <th>Status</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<div class="iziModal" id="view_order_modal">
+
+</div>
+
+<script>
+var orders_table;
+var order_url;
+jQuery(document).ready(function($) {    
+    orders_table = $('#orders_table').DataTable({
+        ajax: {
+            'url': '<?= ($BASE . "/order") ?>',
+            'type': 'POST',
+        },
+        columns: [
+            { data: 'id', title: 'ID'},
+            { data: 'name', title: 'Requested Name' },
+            { data: 'date', title: 'Date' },
+            { data: 'purchase_received', title: 'Purchase Received' },
+            { data: 'purchase_order', title: 'Purchase Order' },
+            { data: 'status', title: 'Status' },
+            { data: 'date_edited', title: 'Last Edited'},
+            { data: null }
+            // { defaultContent: '<button class="button"><i class="fas fa-eye"></i></button>' }
+        ],
+        columnDefs: [
+            {
+                'targets': -1,
+                'data': null,
+                'orderable': false,
+                'searchable': false,
+                'defaultContent': '<button class="button"><i class="fas fa-eye"></i></button>',
+            },
+            {
+                'targets': [0],
+                'visible': false,
+                'searchable': false,
+            }
+        ],
+        order: [[1, 'desc']],
+    });
+
+    $('#orders_table tbody').on('click', 'button', function() {
+        var data = orders_table.row($(this).parents('tr')).data();
+        order_url = '<?= ($BASE . "/order/'+data['id']+'") ?>';
+        $('#view_order_modal').iziModal('open');
+    });
+
+    $('#view_order_modal').iziModal({
+        title: 'View Order',
+        fullscreen: true,                
+        onOpening: function (modal) {
+            modal.startLoading();
+            $.ajax({
+                url: order_url,
+                type: 'GET',
+                success: function (response) {
+                    $('#view_order_modal .iziModal-content').html(response);
+                    modal.stopLoading();
+                }
+            });
+        }
+    });
+});
+</script>
